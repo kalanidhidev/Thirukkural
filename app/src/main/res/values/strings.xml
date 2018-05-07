@@ -1,0 +1,194 @@
+<resources>
+    <string name="app_name">Thirukkural</string>
+    <string name="title_activity_dash_board">DashBoard</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_home">Home</string>
+    <string name="test">அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.</string>
+    <string name="test1">எழுத்துக்கள் எல்லாம் அகரத்தை அடிப்படையாக கொண்டிருக்கின்றன. அதுபோல உலகம் கடவுளை அடிப்படையாக கொண்டிருக்கிறது.</string>
+
+    <string-array name="iyal">
+        <item>பாயிரவியல்</item>
+        <item>இல்லறவியல்</item>
+        <item>துறவறவியல்</item>
+        <item>ஊழியல்</item>
+        <item>அரசியல்</item>
+        <item>அமைச்சியல்</item>
+        <item>அரணியல்</item>
+        <item>கூழியல்</item>
+        <item>படையில்</item>
+        <item>நட்பியல்</item>
+        <item>குடியியல்</item>
+        <item>களவியல்</item>
+        <item>கற்பியல்</item>
+    </string-array>
+
+    <string-array name="paal">
+        <item>அறத்துப்பால்</item>
+        <item>பொருட்பால்</item>
+        <item>காமத்துப்பால்</item>
+    </string-array>
+
+    <string-array name="adhigaaram">
+        <!--Arathuppal -->
+        <item>கடவுள்வாழ்த்து</item>
+        <item>வான்சிறப்பு</item>
+        <item>நீத்தார்பெருமை</item>
+        <item>அறன்வலியுறுத்தல்</item>
+
+        <item>இல்வாழ்க்கை</item>
+        <item>வாழ்க்கைத்துணைநலம்</item>
+        <item>மக்கட்பேறு/புதல்வரைப்பெறுதல்</item>
+        <item>அன்புடைமை</item>
+        <item>விருந்தோம்பல்</item>
+        <item>இனியவைகூறல்</item>
+        <item>செய்ந்நன்றிஅறிதல்</item>
+        <item>நடுவுநிலைமை</item>
+        <item>அடக்கமுடைமை</item>
+        <item>ஒழுக்கமுடைமை</item>
+        <item>பிறனில்விழையாமை</item>
+        <item>பொறையுடைமை</item>
+        <item>அழுக்காறாமை</item>
+        <item>வெஃகாமை</item>
+        <item>புறங்கூறாமை</item>
+        <item>பயனிலசொல்லாமை</item>
+        <item>தீவினையச்சம்</item>
+        <item>ஒப்புரவறிதல்</item>
+        <item>ஈகை</item>
+
+        <item>புகழ்</item>
+        <item>அருளுடைமை</item>
+        <item>புலான்மறுத்தல்</item>
+        <item>தவம்</item>
+        <item>கூடாவொழுக்கம்</item>
+        <item>கள்ளாமை</item>
+        <item>வாய்மை</item>
+        <item>வெகுளாமை</item>
+        <item>இன்னாசெய்யாமை</item>
+        <item>கொல்லாமை</item>
+        <item>நிலையாமை</item>
+        <item>துறவு</item>
+        <item>மெய்யுணர்தல்</item>
+        <item>அவாவறுத்தல்</item>
+
+        <item>ஊழ்</item>
+
+        <!-- Porutpaal -->
+        <item>இறைமாட்சி</item>
+        <item>கல்வி</item>
+        <item>கல்லாமை</item>
+        <item>கேள்வி</item>
+        <item>அறிவுடைமை</item>
+        <item>குற்றங்கடிதல்</item>
+        <item>பெரியாரைத்துணைக்கோடல்</item>
+        <item>சிற்றினஞ்சேராமை</item>
+        <item>தெரிந்துசெயல்வகை</item>
+        <item>வலியறிதல்</item>
+        <item>காலமறிதல்</item>
+        <item>இடனறிதல்</item>
+        <item>தெரிந்துதெளிதல்</item>
+        <item>தெரிந்துவினையாடல்</item>
+        <item>சுற்றந்தழால்</item>
+        <item>பொச்சாவாமை</item>
+        <item>செங்கோன்மை</item>
+        <item>கொடுங்கோன்மை</item>
+        <item>வெருவந்தசெய்யாமை</item>
+        <item>கண்ணோட்டம்</item>
+        <item>ஒற்றாடல்</item>
+        <item>ஊக்கமுடைமை</item>
+        <item>மடியின்மை</item>
+        <item>ஆள்வினையுடைமை</item>
+        <item>இடுக்கணழியாமை</item>
+
+        <item>அமைச்சு</item>
+        <item>சொல்வன்மை</item>
+        <item>வினைத்தூய்மை</item>
+        <item>வினைத்திட்பம்</item>
+        <item>வினைசெயல்வகை</item>
+        <item>தூது</item>
+        <item>மன்னரைச்சேர்ந்தொழுதல்</item>
+        <item>குறிப்பறிதல்</item>
+        <item>அவையறிதல்</item>
+        <item>அவையஞ்சாமை</item>
+
+        <item>நாடு</item>
+        <item>அரண்</item>
+
+        <item>பொருள்செயல்வகை</item>
+
+        <item>படைமாட்சி</item>
+        <item>படைச்செருக்கு</item>
+
+        <item>நட்பு</item>
+        <item>நட்பாராய்தல்</item>
+        <item>பழைமை</item>
+        <item>தீநட்பு</item>
+        <item>கூடாநட்பு</item>
+        <item>பேதைமை</item>
+        <item>புல்லறிவாண்மை</item>
+        <item>இகல்</item>
+        <item>பகைமாட்சி</item>
+        <item>பகைத்திறந்தெரிதல்</item>
+        <item>உட்பகை</item>
+        <item>பெரியாரைப்பிழையாமை</item>
+        <item>பெண்வழிச்சேறல்</item>
+        <item>வரைவின்மகளிர்</item>
+        <item>கள்ளுண்ணாமை</item>
+        <item>சூது</item>
+        <item>மருந்து</item>
+
+        <item>குடிமை</item>
+        <item>மானம்</item>
+        <item>பெருமை</item>
+        <item>சான்றாண்மை</item>
+        <item>பண்புடைமை</item>
+        <item>நன்றியில்செல்வம்</item>
+        <item>நாணுடைமை</item>
+        <item>குடிசெயல்வகை</item>
+        <item>உழவு</item>
+        <item>நல்குரவு</item>
+        <item>இரவு</item>
+        <item>இரவச்சம்</item>
+        <item>கயமை</item>
+
+        <!-- kaamathupaal -->
+        <item>தகையணங்குறுத்தல்</item>
+        <item>குறிப்பறிதல்</item>
+        <item>புணர்ச்சிமகிழ்தல்</item>
+        <item>நலம்புனைந்துரைத்தல்</item>
+        <item>காதற்சிறப்புரைத்தல்</item>
+        <item>நாணுத்துறவுரைத்தல்</item>
+        <item>அலரறிவுறுத்தல்</item>
+
+        <item>பிரிவாற்றாமை</item>
+        <item>படர்மெலிந்திரங்கல்</item>
+        <item>கண்விதுப்பழிதல்</item>
+        <item>பசப்புறுபருவரல்</item>
+        <item>தனிப்படர்மிகுதி</item>
+        <item>நினைந்தவர்புலம்பல்</item>
+        <item>கனவுநிலையுரைத்தல்</item>
+        <item>பொழுதுகண்டிரங்கல்</item>
+        <item>உறுப்புநலனழிதல்</item>
+        <item>நெஞ்சொடுகிளத்தல்</item>
+        <item>நிறையழிதல்</item>
+        <item>அவர்வயின்விதும்பல்</item>
+        <item>குறிப்பறிவுறுத்தல்</item>
+        <item>புணர்ச்சிவிதும்பல்</item>
+        <item>நெஞ்சொடுபுலத்தல்</item>
+        <item>புலவி</item>
+        <item>புலவிநுணுக்கம்</item>
+        <item>ஊடலுவகை</item>
+
+    </string-array>
+    <string name="title_activity_temp">Temp</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
