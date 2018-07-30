@@ -1,12 +1,17 @@
 package com.kalanidhi.thirukkural.fragment
 
 import android.app.Activity
+import android.arch.persistence.db.SupportSQLiteDatabase
+import android.arch.persistence.room.migration.Migration
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
+
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,12 +27,16 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.huma.room_for_asset.RoomAsset
 import com.kalanidhi.thirukkural.db.*
+import io.reactivex.*
 
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 
 
-class ListViewFragment : Fragment() {
+class ListViewFragment : Fragment(), KuralViewAdaptor.FavButtonListener {
 
     var currentAdhigaram = 1;
     private var parentView: View? = null
@@ -44,7 +53,7 @@ class ListViewFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         parentView = inflater!!.inflate(R.layout.activity_list_view_fragment, container, false)
-
+        setRetainInstance(true);
 
         currentAdhigaram = arguments.getInt("adhigaram")
         parentActivity = activity as Home
@@ -52,11 +61,18 @@ class ListViewFragment : Fragment() {
         list_view = parentView!!.findViewById<View>(R.id.list_view) as ListView
 
 
-        database = RoomAsset.databaseBuilder(parentActivity!!.applicationContext, KuralDatabase::class.java, "thirukkural.db").build()
+        val MIGRATION_1_2 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("BKS", "CALEED")
+                database.execSQL("ALTER TABLE 'kuraldata' ADD COLUMN 'fav' INTEGER NOT NULL DEFAULT 0")
+                Log.d("BKS", "CALEED")
+            }
+        }
+        database = RoomAsset.databaseBuilder(parentActivity!!.applicationContext, KuralDatabase::class.java, "thirukkural.db").addMigrations(MIGRATION_1_2).allowMainThreadQueries().build()
 
-        getKural(currentAdhigaram)
+        if ( currentAdhigaram == 135 ) getFavKural() else  getKural(currentAdhigaram)
 
-        var navigation = parentView!!.findViewById<View>(R.id.navigation) as BottomNavigationView
+        val navigation = parentView!!.findViewById<View>(R.id.navigation) as BottomNavigationView
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -208,6 +224,8 @@ class ListViewFragment : Fragment() {
     }
 
     fun getKural(adhigaram: Int) {
+
+
         val string = adhigaram.toString() + ".";
 
         title_view!!.setText("$string" + activity.resources.getStringArray(R.array.adhigaaram).get(adhigaram - 1))
@@ -215,22 +233,72 @@ class ListViewFragment : Fragment() {
 
         val end: Int = (adhigaram * 10)
 
+
+        val observalble: Flowable<List<KuralData>>? = database!!.kuralDao()
+                .getKuralByAdhigaram(start, end).subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+
+        observalble?.subscribe { kuralData ->
+
+            // Log.d("BKS",kuralData.get(0).kural)
+
+            kuralViewAdaptor = KuralViewAdaptor(parentActivity!!, kuralData)
+            kuralViewAdaptor?.setFavButtonListner(this)
+            list_view!!.adapter = kuralViewAdaptor
+            list_view!!.divider = null
+
+
+        }
+    }
+
+
+        fun getFavKural() {
+
+            title_view!!.setText("பிடித்தவை")
+
+
+            val observalble: Flowable<List<KuralData>>? = database!!.kuralDao()
+                    .getFavKural().subscribeOn(Schedulers.io())
+                    ?.observeOn(AndroidSchedulers.mainThread())
+
+            observalble?.subscribe { kuralData ->
+
+                if ( kuralData.size == 0 ) {
+                    Toast.makeText(context, "பிடித்தவை பட்டியல் காலியாக உள்ளது...", Toast.LENGTH_SHORT).show()
+                    return@subscribe
+                }
+
+
+                kuralViewAdaptor = KuralViewAdaptor(parentActivity!!, kuralData)
+                kuralViewAdaptor?.setFavButtonListner(this)
+                list_view!!.adapter = kuralViewAdaptor
+                list_view!!.divider = null
+
+
+            }
+        }
+
+
+        /*
         database!!.kuralDao()
                 .getKuralByAdhigaram(start, end).subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe { kuralData ->
 
+                  //  var getKuralViewModel = ViewModelProviders.of(parentActivity!!).get(GetKuralViewModel::class.java);
+                   // getKuralViewModel.select(kuralData)
                     kuralViewAdaptor = KuralViewAdaptor(parentActivity!!, kuralData)
+                    //kuralViewAdaptor = KuralViewAdaptor(activity, getKuralViewModel.getKuralData(kuralData))
+
                     list_view!!.adapter = kuralViewAdaptor
                     list_view!!.divider = null
 
-                }
-    }
+                }*/
 
     fun getKuralBySearchWord(word: String) {
 
         title_view!!.setText("\"" + word + "\"")
-                            var searchWord = "%" + word + "%"
+        var searchWord = "%" + word + "%"
 
         database!!.kuralDao()
                 .getKuralBySearchWord(searchWord).subscribeOn(Schedulers.io())
@@ -243,4 +311,21 @@ class ListViewFragment : Fragment() {
                 }
     }
 
+
+    override fun onButtonClickListner(kuralData: KuralData) {
+
+        if ( kuralData.fav == 1 ) {
+            Toast.makeText(context, "பிடித்தவை பட்டியலில் சேர்க்கப்பட்டுள்ளது",Toast.LENGTH_SHORT).show()
+        }else {
+            Toast.makeText(context, "பிடித்தவை பட்டியலில் இருந்து நீக்கப்பட்டுவிட்டது",Toast.LENGTH_SHORT).show()
+        }
+
+        database?.kuralDao()?.updateFavKural(kuralData)
+
+    }
+
+
+
 }
+
+

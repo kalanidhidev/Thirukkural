@@ -1,0 +1,51 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "96f08b66d1eef64d226d32ac1db209bf",
+    "entities": [
+      {
+        "tableName": "KuralData",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`kural` TEXT NOT NULL, `explanation` TEXT NOT NULL, `kuralNo` INTEGER NOT NULL, `fav` INTEGER NOT NULL, PRIMARY KEY(`kuralNo`))",
+        "fields": [
+          {
+            "fieldPath": "kural",
+            "columnName": "kural",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "explanation",
+            "columnName": "explanation",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "kuralNo",
+            "columnName": "kuralNo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fav",
+            "columnName": "fav",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "kuralNo"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"96f08b66d1eef64d226d32ac1db209bf\")"
+    ]
+  }
+}

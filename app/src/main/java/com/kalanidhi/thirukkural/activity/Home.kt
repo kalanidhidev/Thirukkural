@@ -10,13 +10,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import com.kalanidhi.thirukkural.R
-import com.kalanidhi.thirukkural.fragment.AdhigarmSearchFragment
-import com.kalanidhi.thirukkural.fragment.IyalSearch
-import com.kalanidhi.thirukkural.fragment.ListViewFragment
-import com.kalanidhi.thirukkural.fragment.VideoFragment
 import android.content.Intent
 import android.content.ActivityNotFoundException
 import android.net.Uri
+import com.kalanidhi.thirukkural.fragment.*
 
 
 class Home : FragmentActivity(), View.OnClickListener {
@@ -29,6 +26,8 @@ class Home : FragmentActivity(), View.OnClickListener {
     private var objPaal: ResideMenuItem? = null
     private var objVideo: ResideMenuItem? = null
     private var objUpdate: ResideMenuItem? = null
+    private var objFav: ResideMenuItem? = null
+
 
 
     /**
@@ -56,21 +55,28 @@ class Home : FragmentActivity(), View.OnClickListener {
         resideMenu!!.setBackground(R.drawable.menu_background)
         resideMenu!!.attachToActivity(this)
         resideMenu!!.setScaleValue(0.6f)
-        // create menu items;
+
+            // create menu items;
         objAdhigaram = ResideMenuItem(this, R.drawable.adhigaram, "அதிகாரங்கள்")
         objPaal = ResideMenuItem(this, R.drawable.paal, "பால்கள்")
         objIyal = ResideMenuItem(this, R.drawable.iyal, "இயல்கள்")
         objVideo = ResideMenuItem(this, R.drawable.video, "காணொளி")
+        objFav = ResideMenuItem(this, R.drawable.fav, "பிடித்தவை")
         objUpdate = ResideMenuItem(this, R.drawable.update, "புதுப்பித்தல்")
 
 
-        // itemSettings = ResideMenuItem(this, R.drawable.header_icon, "குறள் எண் தேடல்")
 
-        objAdhigaram!!.setOnClickListener(this)
-        objIyal!!.setOnClickListener(this)
-        objPaal!!.setOnClickListener(this)
-        objVideo!!.setOnClickListener(this)
-        objUpdate!!.setOnClickListener(this)
+
+        // itemSettings = ResideMenuItem(this, R.drawable.header_icon, "குறள் எண் தேடல்")
+        objAdhigaram?.setOnClickListener(this)
+        objIyal?.setOnClickListener(this)
+        objPaal?.setOnClickListener(this)
+        objVideo?.setOnClickListener(this)
+        objUpdate?.setOnClickListener(this)
+        objFav?.setOnClickListener(this)
+
+
+
 
 
         // itemSettings!!.setOnClickListener(this)
@@ -80,6 +86,9 @@ class Home : FragmentActivity(), View.OnClickListener {
         resideMenu!!.addMenuItem(objPaal, ResideMenu.DIRECTION_LEFT)
         resideMenu!!.addMenuItem(objVideo, ResideMenu.DIRECTION_LEFT)
         resideMenu!!.addMenuItem(objUpdate, ResideMenu.DIRECTION_LEFT)
+        resideMenu!!.addMenuItem(objFav, ResideMenu.DIRECTION_LEFT)
+
+
 
 
 
@@ -114,7 +123,17 @@ class Home : FragmentActivity(), View.OnClickListener {
 
         } else if (view === objVideo) {
             changeFragment(VideoFragment())
-        } else if (view === objUpdate) {
+
+        }
+        else if (view === objFav) {
+
+            val bundle = Bundle()
+            bundle.putInt("adhigaram", 135)
+            val listFragment = ListViewFragment();
+            listFragment.arguments = bundle;
+            changeFragment(listFragment)
+        }
+        else if (view === objUpdate) {
 
             try {
                 startActivity(Intent(Intent.ACTION_VIEW,

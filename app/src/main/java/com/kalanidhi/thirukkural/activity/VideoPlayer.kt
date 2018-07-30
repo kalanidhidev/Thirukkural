@@ -8,16 +8,19 @@ import android.view.View
 import android.widget.MediaController
 import com.kalanidhi.thirukkural.R
 import kotlinx.android.synthetic.main.video_player.*
+import org.json.JSONObject
 
 class VideoPlayer : AppCompatActivity() {
 
     private var playbackPosition = 0
-    private val rtspUrl = "http://www.goog.com/"
+    private val rtspUrl= "https://www.youtube.com/watch?v=fVMZ3MuCr4s"
     private lateinit var mediaController: MediaController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.video_player)
+
 
         mediaController = MediaController(this)
 
@@ -37,7 +40,8 @@ class VideoPlayer : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val uri = Uri.parse(rtspUrl + intent.extras.getString("no") +".mp4")
+       // val uri = Uri.parse(rtspUrl + intent.extras.getString("no") +".mp4")
+         val uri = Uri.parse(rtspUrl)
         videoView.setVideoURI(uri)
         progressBar.visibility = View.VISIBLE
     }
@@ -54,7 +58,6 @@ class VideoPlayer : AppCompatActivity() {
 
         super.onStop()
     }
-
 
 }
 

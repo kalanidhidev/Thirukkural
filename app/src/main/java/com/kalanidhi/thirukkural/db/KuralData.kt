@@ -13,7 +13,7 @@ import java.util.*
 
 @Entity
 class KuralData(@field:ColumnInfo(name = "kural") var kural: String,
-                @field:ColumnInfo(name = "explanation") var explanation: String, @PrimaryKey var kuralNo: Int ) {
+                @field:ColumnInfo(name = "explanation") var explanation: String, @PrimaryKey var kuralNo: Int , @field:ColumnInfo(name = "fav") var fav: Int ) {
 
 }
 

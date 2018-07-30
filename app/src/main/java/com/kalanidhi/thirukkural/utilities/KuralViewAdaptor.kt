@@ -1,31 +1,33 @@
 package com.kalanidhi.thirukkural.utilities
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.kalanidhi.thirukkural.R
-import android.graphics.Typeface
-import android.support.v4.content.res.ResourcesCompat
 import android.util.TypedValue
 import com.kalanidhi.thirukkural.db.KuralData
+import com.like.LikeButton
 
 
 /**
  * Created by root on 19/2/18.
  */
-class KuralViewAdaptor : BaseAdapter {
-    private var data : List<KuralData> = ArrayList<KuralData>()
-    private var context: Context;
+class KuralViewAdaptor : BaseAdapter  {
+     var data : List<KuralData> = ArrayList<KuralData>()
+     var filterData : List<KuralData> = ArrayList<KuralData>()
+
+     var context: Context;
+      var favButtonListener : FavButtonListener? = null
+
 
     constructor(context: Context, data: List<KuralData>) : super() {
         this.data = data;
         this.context = context;
+        this.filterData= data ;
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -42,9 +44,22 @@ class KuralViewAdaptor : BaseAdapter {
             viewHolder = view.tag as ViewHolder
         }
 
+
         viewHolder.kural.text = data[position].kural
         viewHolder.kuralNo.text = data[position].kuralNo.toString()
         viewHolder.explanation.text= data[position].explanation
+
+        viewHolder.fav.isLiked= if (data[position].fav == 0 )  false  else  true
+
+        viewHolder.fav.setOnClickListener {
+
+            viewHolder.fav.isLiked=if ( viewHolder.fav.isLiked ) false else true ;
+            data[position].fav=if ( viewHolder.fav.isLiked ) 1 else 0  ;
+
+            //favButtonListener?.onButtonClickListner(viewHolder.kuralNo.text.toString(),if (viewHolder.fav.isLiked) 1 else 0 )
+            favButtonListener?.onButtonClickListner( data[position])
+
+        }
 
         if (data[position].kuralNo.toString().length == 3 ){
             viewHolder.kuralNo.setTextSize(TypedValue.COMPLEX_UNIT_SP,20F)
@@ -54,15 +69,15 @@ class KuralViewAdaptor : BaseAdapter {
 
         }
 
-        val myCustomFont: Typeface? = ResourcesCompat.getFont(context, R.font.litsansmedium  )
+      //  val myCustomFont: Typeface? = ResourcesCompat.getFont(context, R.font.litsansmedium  )
 
-        viewHolder.kural!!.setTypeface(myCustomFont, Typeface.NORMAL)
+        //viewHolder.kural!!.setTypeface(myCustomFont, Typeface.NORMAL)
 
         val gra: GradientDrawable = ((viewHolder.kuralNo.background as GradientDrawable));
 
-        val color = Color.parseColor("#03a9f4")
+        //val color = Color.parseColor(context.getColor(R.color.colorPrimary))
 
-        (viewHolder.kuralNo.getBackground() as GradientDrawable).setColor(color)
+        (viewHolder.kuralNo.getBackground() as GradientDrawable).setColor(context.getColor(R.color.colorPrimaryDark))
 
         return view;
 
@@ -80,23 +95,37 @@ class KuralViewAdaptor : BaseAdapter {
         return data.size
     }
 
-
     /**
-     * Bind the new data to view holder
+    Bind the new_file data to view holder
      */
     private class ViewHolder(view: View?) {
         var kuralNo: TextView
-        var kural: TextView
-        var explanation: TextView
+        var kural: KuralView
+        var explanation: KuralView
+        var fav : LikeButton
+
 
 
         //  if you target API 26, you should change to:
         init {
-            this.kural = view?.findViewById<TextView>(R.id.kural) as TextView
+            this.kural = view?.findViewById<KuralView>(R.id.kural) as KuralView
             this.kuralNo = view.findViewById<TextView>(R.id.kural_no) as TextView
-            this.explanation = view.findViewById<TextView>(R.id.kural_meaning_ta) as TextView
+            this.explanation = view.findViewById<KuralView>(R.id.kural_meaning_ta) as KuralView
+            this.fav = view.findViewById<LikeButton>(R.id.fav) as LikeButton
+
+
 
         }
     }
+
+    fun setFavButtonListner(listener: FavButtonListener) {
+        this.favButtonListener  = listener
+    }
+
+    interface FavButtonListener {
+        //fun onButtonClickListner(kuralNo: String,liked : Int)
+        fun onButtonClickListner(kuralData: KuralData)
+    }
+
 
 }
